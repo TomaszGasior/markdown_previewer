@@ -2,9 +2,9 @@
 
 $files = [
 	'thirdparty/github-markdown-css.php',
-	'thirdparty/Parsedown.php',
-	'source/functions.php',
-	'source/previewer.php',
+	'thirdparty/parsedown.php',
+	'source/app.php',
+	'source/gui.php',
 ];
 
 foreach ($files as &$file) {
@@ -13,6 +13,6 @@ foreach ($files as &$file) {
 
 file_put_contents(
 	'markdown_preview',
-	'#!/usr/bin/wxphp' . "\n" . '<?php ' . implode($files)
+	'#!/usr/bin/php' . "\n" . '<?php ' . implode($files)
 );
 chmod('markdown_preview', 0755);
