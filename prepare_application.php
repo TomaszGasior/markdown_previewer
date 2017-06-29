@@ -12,7 +12,7 @@ foreach ($files as &$file) {
 }
 
 file_put_contents(
-	'markdown_preview',
+	'markdown_previewer',
 	'#!/usr/bin/php' . "\n" . '<?php ' . implode($files)
 );
-chmod('markdown_preview', 0755);
+chmod('markdown_previewer', 0755);

@@ -11,8 +11,8 @@ trait GUI
 		}
 		$checked = true;
 
-		// Remove Zenity icon from titlebar by setting unexistent icon.
-		$arguments['window-icon'] = 'undefined';
+		// Remove Zenity icon from titlebar.
+		$arguments['window-icon'] = '/usr/share/icons/Adwaita/scalable/mimetypes/text-x-generic-symbolic.svg';
 
 		// Prepare arguments string.
 		array_walk($arguments, function(&$value, $key){
