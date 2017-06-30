@@ -2,12 +2,12 @@
 
 trait GUI
 {
-	static private function _zenity(array $arguments = [])
+	static private function _zenity(array $arguments = [], ?string &$output = null) : bool
 	{
 		// Check whether Zenity is installed.
 		static $checked = false;
 		if (!$checked and !shell_exec('which zenity 2> /dev/null')) {
-			exit('This applications requires Zenity.'."\n");
+			exit('This application requires Zenity to work.');
 		}
 		$checked = true;
 
@@ -21,33 +21,37 @@ trait GUI
 		$arguments = implode(' ', $arguments);
 
 		// Run Zenity. Use English messages for better consistence. Hide unwanted GTK error messages.
-		// Return value returned by Zenity if is not empty. Otherwise, return true when exit code
-		// was other than 0 or return false when exit code is equal to 0.
+		// Return true when user clicked OK button or false when user clicked Close button.
 		exec('LC_MESSAGES=C zenity ' . $arguments . ' 2> /dev/null', $output, $code);
-		return ($output) ? implode('', $output) : !(bool)$code;
+		$output = join($output);
+		return !(bool)$code;
 	}
 
-	static public function pickMarkdownFileToOpen()
+	static public function selectMarkdownFileToOpen() : string
 	{
-		return self::_zenity([
+		self::_zenity([
 			'file-selection' => '',
 			'file-filter'    => 'Markdown files (*.md) | *.md',
 			'title'          => 'Choose Markdown file',
-		]);
+		], $filePath);
+
+		return $filePath;
 	}
 
-	static public function pickHTMLFileToSave()
+	static public function selectHTMLFileToSave() : string
 	{
-		return self::_zenity([
+		self::_zenity([
 			'file-selection'    => '',
-			'file-filter'       => 'HTML documents (*.html) | *.html *.htm',
 			'save'              => '',
 			'confirm-overwrite' => '',
-			'title'             => 'Choose locaction to save new HTML file',
-		]);
+			'file-filter'       => 'HTML documents (*.html) | *.html *.htm',
+			'title'             => 'Choose location for HTML document',
+		], $filePath);
+
+		return $filePath;
 	}
 
-	static public function showHTMLFile($HTMLFilePath, $markdownFilePath, &$userWantsHTMLFile)
+	static public function showHTMLFile(string $HTMLFilePath, string $markdownFilePath, ?bool &$userWantsHTMLFile) : void
 	{
 		$clickedButton = self::_zenity([
 			'text-info'    => '',
@@ -63,13 +67,13 @@ trait GUI
 		$userWantsHTMLFile = $clickedButton;
 	}
 
-	static public function sayHello()
+	static public function sayHello() : void
 	{
 		$message = <<< 'EOL'
 <span size='x-large'>Markdown previewer</span>\n\n
-This is an very simple application for viewing Markdown files.\n
-Close this dialog and pick Markdown file on your hard drive.\n
-You can also run this application with file path as argument.\n\n
+<b>This is an very simple application for viewing Markdown files.\n
+Close this dialog and choose Markdown file on your hard drive.\n
+You can also run this application with file path as argument.</b>\n\n
 Uses Parsedown as Markdown parser\n
 — <a href='http://parsedown.org'>http://parsedown.org</a>\n
 Uses GitHub Markdown CSS as preview stylesheet\n

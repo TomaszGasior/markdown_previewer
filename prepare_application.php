@@ -3,8 +3,8 @@
 $files = [
 	'thirdparty/github-markdown-css.php',
 	'thirdparty/parsedown.php',
-	'source/app.php',
 	'source/gui.php',
+	'source/app.php',
 ];
 
 foreach ($files as &$file) {
