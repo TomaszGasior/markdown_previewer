@@ -71,9 +71,9 @@ trait GUI
 	{
 		$message = <<< 'EOL'
 <span size='x-large'>Markdown previewer</span>\n\n
-<b>This is an very simple application for viewing Markdown files.\n
-Close this dialog and choose Markdown file on your hard drive.\n
-You can also run this application with file path as argument.</b>\n\n
+<b>This is a very simple application for viewing Markdown files.\n
+Close this dialog and choose a Markdown file on your hard drive.\n
+You can also run this application with a file path as an argument.</b>\n\n
 Uses Parsedown as Markdown parser\n
 — <a href='http://parsedown.org'>http://parsedown.org</a>\n
 Uses GitHub Markdown CSS as preview stylesheet\n
@@ -87,7 +87,7 @@ EOL;
 			'text'      => str_replace("\n", '', $message),
 			'icon-name' => 'edit',
 			'title'     => 'Markdown previewer',
-			'ok-label'  => 'OK, go next!',
+			'ok-label'  => 'OK, let\'s go!',
 		]);
 	}
 }
